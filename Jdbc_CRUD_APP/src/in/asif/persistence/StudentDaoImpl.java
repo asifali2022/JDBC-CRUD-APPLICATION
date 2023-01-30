@@ -48,8 +48,46 @@ public class StudentDaoImpl implements IstudentDao {
 
 	@Override
 	public Student searchStudent(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection=null;
+		PreparedStatement pstmt=null;
+		ResultSet resultSet=null;
+		Student student=null;
+		
+		try {
+			connection = JdbcUtil.getJdbcConnection();
+			if(connection!=null)
+			{
+				String sql="SELECT `id`,`name`,`age`,`address` FROM student WHERE `id`=? ";
+				 pstmt = connection.prepareStatement(sql);
+			}
+		    if(pstmt!=null)
+		    {
+		    	pstmt.setInt(1, id);
+		    	resultSet = pstmt.executeQuery();
+		    	if (resultSet != null) {
+		    		
+		    		if(resultSet.next()) {
+		    			student = new Student();
+		    			student.setId(resultSet.getInt(1));
+		    			student.setName(resultSet.getString(2));
+		    			student.setAge(resultSet.getInt(3));
+		    			student.setAddress(resultSet.getString(4));
+		    			return student;
+						
+					}
+				}
+		    	
+		    	
+		    }
+				
+			}
+		
+		 catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return student;
+		
 	}
 
 	@Override
