@@ -98,8 +98,39 @@ public class StudentDaoImpl implements IstudentDao {
 
 	@Override
 	public String deleteStudent(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Connection connection=null;
+		PreparedStatement pstmt=null;
+		Scanner sc=null;
+		
+		try {
+			connection = JdbcUtil.getJdbcConnection();
+			if(connection!=null)
+			{
+				String sql="DELETE FROM `student` WHERE `id`=?";
+				 pstmt = connection.prepareStatement(sql);
+			}
+		    if(pstmt!=null)
+		    {
+		    	
+		    	pstmt.setInt(1, id);
+		    	
+		    	
+		    	int rowUpdated = pstmt.executeUpdate();
+		    	if (rowUpdated==1) {
+		    		
+		    		return "SUCCESS";
+					
+				}
+		    	else {return "Failure";}
+		    }
+				
+			}
+		
+		 catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "FAILURE";
 
+}
 }

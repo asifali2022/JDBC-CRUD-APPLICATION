@@ -13,7 +13,27 @@ public class TestApp {
 		
 		insertOperation();
 		searchOperation();
-		
+		deleteOperation();
+	}
+
+
+	private static void deleteOperation() {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Student Id::");
+		Integer id=sc.nextInt();
+		IstudentService studentServive = StudentServiceFactory.getStudentServive();
+		String status = studentServive.deleteStudent(id);
+		if (status.equalsIgnoreCase("success")) {
+			System.out.println("Data Deleted Successfully");
+			
+		} else if (status.equalsIgnoreCase("not found")) {
+			System.out.println("Id Not Found ");
+		}
+		else
+		{
+			System.out.println("Data Not Deleted !");
+		}
+		sc.close();
 	}
 
 

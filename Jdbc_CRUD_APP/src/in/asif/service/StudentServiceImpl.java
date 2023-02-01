@@ -35,8 +35,8 @@ public class StudentServiceImpl implements IstudentService {
 
 	@Override
 	public String deleteStudent(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		stdDao = StudentDaoFactory.getStudentDao();
+		return stdDao.deleteStudent(id);
 	}
 
 }
