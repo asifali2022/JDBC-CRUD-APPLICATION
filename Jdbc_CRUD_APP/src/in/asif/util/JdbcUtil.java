@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 public class JdbcUtil {
 
 	private JdbcUtil() {
@@ -21,29 +24,11 @@ public class JdbcUtil {
 
 	public static Connection getJdbcConnection() throws SQLException, IOException 
 	{
-		// Take the data from properties file
-				FileInputStream fis = new FileInputStream("E:\\JDBC_PROJECT\\Jdbc_CRUD_APP\\application.properties");
-				Properties properties = new Properties();
-				properties.load(fis);
-
-				// Step2. Establish the Connection
-				Connection connection = DriverManager.getConnection(properties.getProperty("url"),
-						properties.getProperty("username"), properties.getProperty("password"));
-				System.out.println("connection object created...");
-				return connection;
+		
+				HikariConfig config = new HikariConfig("E:\\JDBC_PROJECT\\Jdbc_CRUD_APP\\application.properties");
+				HikariDataSource dataSource = new HikariDataSource(config);
+				return dataSource.getConnection();
 		
 	}
-	public static void cleanUp(Connection con, Statement statement, ResultSet resultSet) throws SQLException {
-		// Step6. Close the resources
-		if (con != null) {
-			con.close();
-		}
-		if (statement != null) {
-			statement.close();
-		}
-		if (resultSet != null) {
-			resultSet.close();
-		}
-
-	}
+	
 }

@@ -28,9 +28,9 @@ public class StudentServiceImpl implements IstudentService {
 	}
 
 	@Override
-	public String updateStudent(Integer id, String name, Integer age, String address) {
-		// TODO Auto-generated method stub
-		return null;
+	public String updateStudent(Student student) {
+        stdDao = StudentDaoFactory.getStudentDao();
+		return stdDao.updateStudent(student);
 	}
 
 	@Override
